@@ -8,3 +8,15 @@ Please organize your directory tree in the following manner (so that the relativ
 Analysis - all processing and analysis happens here! <br/>
 Covar - prepare your covariate file here <br/>
 Import - download raw vcf or bfile data here <br/>
+
+
+## 1. Import
+Option 1: vcf.gz. If you have multiple vcf.gz, please order, index and merge them beforehand. A template merge script is provided.
+
+Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed). 
+
+## 2. Covar
+
+
+
+## 3. Analysis
