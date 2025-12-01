@@ -14,23 +14,27 @@ Analysis - all processing and analysis happens here! <br/>
 *Note: package management is done via module load (standard for shared compute clusters). Also, unless otherwise stated, all scripts are run with working directory set to "import", "covar", or "analysis" depending on which part of the workflow you are operating in. 
 
 *Jobs will be submitted using slurm. If you wish to run these scripts locally, simply remove "sbatch" wrapper around some of the commands.
+<br/>
 
 ## 1. Import
 Option 1: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. A template index and merge script is provided.
 
 Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed). 
+<br/>
 
 ## 2. Covar
 
 covar MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name specified above. 
 
 It is assumed that your covar has at least the following columns: "FID IID Sex Age PC1 PC2 PC3 PC4 PC5 Status", where Status is coded as 1=control, 2=case. If not, update SKATO.r script accordingly (in the analysis section).
+<br/>
 
 ## 3. Analysis
 
 As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths!
 
 Now, there is also quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
+<br/>
 
 ## 4. Meta-Analysis
 
