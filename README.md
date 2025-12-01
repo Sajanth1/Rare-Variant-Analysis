@@ -1,4 +1,11 @@
 # Rare-Variant-Analysis (IN-PROGRESS)
+
+TO-DO: upload meta-analysis scripts (and make generic)
+generic VEP annotation
+covar template scripts
+
+
+
 Run gene-based rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This pipeline includes pre-processing of bfiles or vcfs, as well as single-variant analysis and meta-analysis. 
 
 <em>For any questions: sajanth.kanagasingam@mail.mcgill.ca (I would be more than happy to help!) </em>  <br/> <br/>
