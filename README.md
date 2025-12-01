@@ -5,7 +5,7 @@ Run gene-based rare variant analysis on genomics data from large biobanks (here,
 
 
 Please organize your directory tree in the following manner (so that the relative paths work):
-![schema1](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Schema1.png)
+![schema1](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Structure.png)
 
 Import - download raw vcf or bfile data here <br/>
 Covar - prepare your covariate file here <br/>
@@ -31,3 +31,10 @@ It is assumed that your covar has at least the following columns: "FID IID Sex A
 As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths!
 
 Now, there is also quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
+
+## 4. Meta-Analysis
+
+Each set's variants will be aggregated across cohorts and meta-analyzed. In the current script, it is assumed that AMP_PD and UKBB are being meta-analyzed so modify the code according to your specifics. Here's a schema to help you visualize the meta-analysis process.
+![schema2](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Meta-Analysis.png)
+
+*Note: one must maintain the directory architecture created by this pipeline in order for the scripts to be able to fetch the appropriate files from each cohort.
