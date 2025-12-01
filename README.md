@@ -17,7 +17,7 @@ Analysis - all processing and analysis happens here! <br/>
 <br/>
 
 ## 1. Import
-Option 1: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. A template index and merge script is provided.
+Option 1: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. A template index and merge script is provided in "import/script".
 
 Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed). 
 <br/>
