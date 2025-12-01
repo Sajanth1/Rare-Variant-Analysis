@@ -13,12 +13,15 @@
 # USER INPUT: Specify cohort, UCSC bed file, covar and VCF file (named vcf_preprocess despite the fact that it must be processed via sample-level and variant-level QC first)
 cohort=UKBB
 bed=~/path/to/Sajanth44.GRCh38.bed
-covar=~/path/to/covar_UKBB.txt # covar MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name specified above (e.g., AMP_PD or UKBB)
+
+# covar MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name specified above. It is assumed that your covar has at least the following columns: "FID IID Sex Age PC1 PC2 PC3 PC4 PC5 Status" where Status is coded as 1=control, 2=case. If not, update SKATO.r script accordingly.
+covar=~/path/to/covar_UKBB.txt 
 num_controls=100000  # Number of controls to sample or big number to keep all
 
 vcf_preprocess=~/path/to/UKBB_preprocess.vcf.gz # Option 1
 bfile_preprocess=~/path/to/AMP_PD_preprocess # Option 2
 mapfile -t genelist < <(awk '{print $5}' $bed)
+
 
 
 # 0. Set up env
@@ -42,7 +45,7 @@ if [[ $cohort == "AMP_PD" ]]; then
     --keep $covar  \
     --make-bed --out AMP_PD_allctrl  
     
-    awk 'BEGIN{OFS="\t"} {$2 = $1 ":" $4 ":" $6 ":" $5; print}' AMP_PD_allctrl.bim > tmp && mv tmp AMP_PD_allctrl.bim   # Add unique tag (ref:alt) Keep in mind that .bim file is only bfile that contains variant IDs
+    awk 'BEGIN{OFS="\t"} {$2 = $1 ":" $4 ":" $6 ":" $5; print}' AMP_PD_allctrl.bim > tmp && mv tmp AMP_PD_allctrl.bim   # Add unique tag (chr:start:ref:alt) Keep in mind that .bim file is only bfile that contains variant IDs
     plink2 --bfile AMP_PD_allctrl --recode vcf bgz --out AMP_PD_all # Create VCF
     bcftools view -G --threads 4 -Oz -o AMP_PD.vcf.gz AMP_PD_all.vcf.gz ; tabix AMP_PD.vcf.gz  # Create smaller vcf (by removing genotype columns)
 

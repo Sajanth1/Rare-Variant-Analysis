@@ -22,6 +22,10 @@ Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed).
 
 ## 2. Covar
 
+covar MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name specified above. 
 
+It is assumed that your covar has at least the following columns: "FID IID Sex Age PC1 PC2 PC3 PC4 PC5 Status", where Status is coded as 1=control, 2=case. If not, update SKATO.r script accordingly (in the analysis section).
 
 ## 3. Analysis
+
+As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths!
