@@ -1,5 +1,7 @@
 # Rare-Variant-Analysis (IN-PROGRESS)
-Run rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This pipeline includes pre-processing of bfiles or vcfs, as well as single-variant analysis and meta-analysis. For any questions: sajanth.kanagasingam@mail.mcgill.ca (I would be more than happy to help!)
+Run rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This pipeline includes pre-processing of bfiles or vcfs, as well as single-variant analysis and meta-analysis. 
+
+For any questions: sajanth.kanagasingam@mail.mcgill.ca (I would be more than happy to help!) <em/>
 
 
 Please organize your directory tree in the following manner (so that the relative paths work):
