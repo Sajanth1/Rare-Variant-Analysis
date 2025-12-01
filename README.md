@@ -1,5 +1,5 @@
 # Rare-Variant-Analysis (IN-PROGRESS)
-Run rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This pipeline includes pre-processing of bfiles or vcfs, as well as single-variant analysis and meta-analysis. 
+Run gene-based rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This pipeline includes pre-processing of bfiles or vcfs, as well as single-variant analysis and meta-analysis. 
 
 <em>For any questions: sajanth.kanagasingam@mail.mcgill.ca (I would be more than happy to help!) </em>  <br/> <br/>
 
@@ -29,3 +29,5 @@ It is assumed that your covar has at least the following columns: "FID IID Sex A
 ## 3. Analysis
 
 As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths!
+
+Now, there is also quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
