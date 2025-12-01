@@ -17,6 +17,8 @@ Analysis - all processing and analysis happens here! <br/>
 <br/>
 
 ## 1. Import
+The main analysis script ("rare_variant.VEP.sh") has two file-type options to analyse pre-processed WGS data. Feel free to mix-and-match, but the provided script assumes that bfiles are provided for AMP_PD and a vcf.gz file is provided for UKBB.
+
 Option 1: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. A template index and merge script is provided in "import/script".
 
 Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed). 
