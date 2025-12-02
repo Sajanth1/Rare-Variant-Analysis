@@ -9,10 +9,10 @@ _README.md
 │  ├─ rare_variant.VEP.sh
 │  └─ scripts
 │     ├─ FDR.r
-SKATO.r
-VEP114_annotation.sh
-run_multiskato.sh
-run_singlevariant.sh
+│     ├─ SKATO.r
+│     ├─ VEP114_annotation.sh
+│     ├─ run_multiskato.sh
+│     ├─ run_singlevariant.sh
 │     ├─ vep_setid_prep.py
 │     └─ vep_singlevariants.py
 ├─ covar
