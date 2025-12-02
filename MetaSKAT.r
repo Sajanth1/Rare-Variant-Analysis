@@ -20,6 +20,7 @@ cohort_list <- args$cohort
 File.Meta.SKATO = paste0("METASKAT/", gene, "/", gene, ".results.metaskato")
 set.seed(2025)
 
+
 File.Mat.vec <- character(length(cohort_list))
 File.SetInfo.vec <- character(length(cohort_list))
 
