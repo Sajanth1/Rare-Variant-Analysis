@@ -1,4 +1,4 @@
-# Rare-Variant-Analysis (IN-PROGRESS)
+# Rare-Variant-Analysis
 
 Run gene-based rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This pipeline includes pre-processing of bfiles or vcfs, as well as single-variant analysis and meta-analysis. 
 
