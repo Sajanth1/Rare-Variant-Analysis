@@ -35,13 +35,13 @@ Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed).
 
 Covariates file MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name specified above. 
 
-It is assumed that your covar has at least the following columns: "FID IID Sex Age PC1 PC2 PC3 PC4 PC5 Status", where Status is coded as 1=control, 2=case. If not, update SKATO.r script accordingly (in the analysis section). An example covar for UKBB is also provided. 
+It is assumed that your covar has at least the following columns: "FID IID Sex Age PC1 PC2 PC3 PC4 PC5 Status", where Status is coded as 1=control, 2=case. If not, update SKATO.r script accordingly (in the analysis section). An example covar (for UKBB) is also provided. 
 <br/><br/>
 
 
 ## 3. Analysis
 
-As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths! Make sure to have VEP installed beforehand.
+As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths! Make sure to have VEP installed beforehand and to update the paths in VEP114_annotation.sh.
 
 Now, there is also quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
 <br/><br/>
