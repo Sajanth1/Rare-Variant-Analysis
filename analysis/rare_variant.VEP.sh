@@ -12,7 +12,7 @@
 
 # USER INPUT: Specify cohort, UCSC bed file, covar and VCF file (named vcf_preprocess despite the fact that it must be processed via sample-level and variant-level QC first)
 cohort=UKBB
-bed=~/path/to/Sajanth44.GRCh38.bed
+bed=~/path/to/genelist.bed
 
 # covar MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name specified above. It is assumed that your covar has at least the following columns: "FID IID Sex Age PC1 PC2 PC3 PC4 PC5 Status" where Status is coded as 1=control, 2=case. If not, update SKATO.r script accordingly.
 covar=~/path/to/covar_UKBB.txt 

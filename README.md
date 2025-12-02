@@ -46,8 +46,9 @@ Now, there is also quite a bit of flexibility in that you can directly modify th
 <br/>
 
 ## 4. Meta-Analysis
+*metaSKAT.sh should be run from a dir that contains all cohorts as sub-directories.
 
-Each set's variants will be aggregated across cohorts and meta-analyzed. In the current script, it is assumed that AMP_PD and UKBB are being meta-analyzed so modify the code according to your specifics. Here's a schema to help you visualize the meta-analysis process.
+Each set's variants will be aggregated across cohorts and meta-analyzed. As usual, provide appropriate info in "USER INPUT" section of metaSKAT.sh. Here's a schema to help you visualize the meta-analysis process.
 ![schema2](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Meta_Analysis.png)
 
-*Note: one must maintain the directory architecture created by this pipeline in order for the scripts to be able to fetch the appropriate files from each cohort.
+*Note: one must maintain the directory architecture created by this pipeline for each cohort in order for the scripts to be able to fetch the appropriate files.
