@@ -41,7 +41,7 @@ It is assumed that your covar has at least the following columns: "FID IID Sex A
 
 ## 3. Analysis
 
-As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths!
+As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths! Make sure to have VEP installed beforehand.
 
 Now, there is also quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
 <br/><br/>
