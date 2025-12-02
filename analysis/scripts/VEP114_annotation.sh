@@ -1,28 +1,27 @@
 #!/bin/bash
-# Use perl virtual environment
-# virtual environment path: ~/soft/packages/ensembl-vep_env/perl_local_lib
 # For more options running Vep see:
 # https://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html
 
-#Run from scratch/dir
 cohort=$1
 VCF="${cohort}.vcf.gz"
 OUTPUT=./annotation/$cohort.VEPannotated
 
-# Load dependencies
-# module load StdEnv/2023 perl/5.36.1 gcc/13.3 mariadb/11.5.0 htslib/1.22.1 db/18.1.32
-perl -Mlocal::lib=~/links/projects/def-grouleau/COMMON/soft/packages/ensembl-vep_env/perl_local_lib
-eval $(perl -Mlocal::lib=~/links/projects/def-grouleau/COMMON/soft/packages/ensembl-vep_env/perl_local_lib)
+
+#--- USER INPUT: replace all "path/to/" with your actual paths! ---
 
 
+perl -Mlocal::lib=~/path/to/perl_local_lib
+eval $(perl -Mlocal::lib=~/path/to/perl_local_lib)
+
+# Many options for VEP are optional. This is a template script; modify according to your needs. That said, vep_setid_prep.py and vep_single-variants.py scripts do assume that these options are used.
 # Setting environmental variables
-export VEP_DIR=~/links/projects/def-grouleau/COMMON/soft/packages/ensembl-vep_env/ensembl-vep
+export VEP_DIR=~/path/to/ensembl-vep
 CACHE=${VEP_DIR}/.vep/cache
 PLUGINS_DIR=${VEP_DIR}/.vep/Plugins
 FASTA=${CACHE}/homo_sapiens/114_GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa.gz
 
 #ClinVar custom annotation
-CLINVAR_VCF=~/links/projects/def-grouleau/COMMON/data/VEP/clinvar/clinvar_20240407.GRCh38.vcf.gz
+CLINVAR_VCF=~/path/to/clinvar_20240407.GRCh38.vcf.gz
 CLINVAR_FIELDS="ALLELEID,CLNDN,CLNREVSTAT,CLNSIG,CLNSIGCONF"
 
 #Plugin data files
@@ -42,4 +41,4 @@ $VEP_DIR/vep -i ${VCF} -o ${OUTPUT} --force_overwrite --safe \
 
 
 # Deactivate perl environment
-eval $(perl -Mlocal::lib=--deactivate,~/links/projects/def-grouleau/COMMON/soft/packages/ensembl-vep_env/perl_local_lib)
+eval $(perl -Mlocal::lib=--deactivate,~/path/to/perl_local_lib)
