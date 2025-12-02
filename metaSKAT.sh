@@ -19,7 +19,7 @@ mapfile -t genelist < <(awk '{print $5}' $bed)
 
 for gene in "${genelist[@]}"; do
     mkdir -p "METASKAT/$gene" METASKAT/logs
-    Rscript MetaSKAT.r --cohort "${cohorts[@]}" --gene "$gene" 2>&1 | tee "METASKAT/$gene/MetaSKAT.$gene.log"
+    Rscript metaSKAT.r --cohort "${cohorts[@]}" --gene "$gene" 2>&1 | tee "METASKAT/$gene/MetaSKAT.$gene.log"
     
     # Parallelize per gene:
     # command="module load StdEnv/2020 nixpkgs/16.09 gcc/7.3 r/3.5.2 && Rscript MetaSKAT.r --gene $gene 2>&1 | tee 'METASKAT/$gene/MetaSKAT.$gene.log' && echo 'Done!'"
