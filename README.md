@@ -43,12 +43,12 @@ It is assumed that your covar has at least the following columns: "FID IID Sex A
 
 As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths! Make sure to have VEP installed beforehand and to update the paths in VEP114_annotation.sh.
 
-Now, there is also quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
+Now, this pipeline has quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
 <br/><br/>
 
 
 ## 4. Meta-Analysis
-*metaSKAT.sh should be run from a dir that contains all cohorts as sub-directories.
+metaSKAT.sh should be run from a dir that contains all cohorts as sub-directories.
 
 Each set's variants will be aggregated across cohorts and meta-analyzed. As usual, provide appropriate info in "USER INPUT" section of metaSKAT.sh. Here's a schema to help you visualize the meta-analysis process.
 ![schema2](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Meta_Analysis.png)
