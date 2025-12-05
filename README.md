@@ -20,7 +20,10 @@ Analysis - all processing and analysis happens here! <br/>
 
 
 ## 1. Import
-The main analysis script ("rare_variant.VEP.sh") has two file-type options to analyse pre-processed WGS data. Feel free to mix-and-match, but the provided script assumes that bfiles are provided for AMP_PD and a vcf.gz file is provided for UKBB.
+Before starting a project that uses WGS data, one must always create a bed file that contains the genomic coordinates of the genes to be studied. A template ("import/Sajanth44.GRCh38.bed") is provided to aid you in the process of creating one. Your bed file must be formatted in the same way (CHR START END ENST GENE_NAME)
+<br/>
+
+For the WGS data itself, the main analysis script ("analysis/rare_variant.VEP.sh") has two file-type options to analyse pre-processed WGS data. Feel free to mix-and-match, but the provided script assumes that bfiles are provided for AMP_PD and a vcf.gz file is provided for UKBB.
 
 Option 1: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. Template index and merge scripts are provided in "import".
 
