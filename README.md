@@ -51,7 +51,7 @@ Now, this pipeline has quite a bit of flexibility in that you can directly modif
 
 
 ## 4. Meta-Analysis
-metaSKAT.sh should be run from a dir that contains all cohorts as sub-directories.
+MetaSKAT.sh should be run from a dir that contains all cohorts as sub-directories.
 
 Each set's variants will be aggregated across cohorts and meta-analyzed. As usual, provide appropriate info in "USER INPUT" section of metaSKAT.sh. Here's a schema to help you visualize the meta-analysis process.
 ![schema2](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Meta_Analysis.png)
