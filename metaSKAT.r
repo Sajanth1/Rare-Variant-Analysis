@@ -9,20 +9,16 @@ require(methods)
 suppressPackageStartupMessages(require(Xmisc)) #Basically, kept getting The following object is masked from 'package:base': dir.exists
 
 #-----------------------------------------------
-parser <- ArgumentParser$new()
-parser$add_argument('--gene', type='character', help='Gene name eg. VPS11', required=TRUE)
-parser$add_argument('--cohort', type='character', nargs='+', help='Cohort names', required=TRUE)
-args <- parser$get_args()
-#-----------------------------------------------
 setwd(wd)
-gene <- args$gene
-cohort_list <- args$cohort
+args <- commandArgs(trailingOnly = TRUE)
+gene <- args[1]
+cohort_list <- args[-1]
 File.Meta.SKATO = paste0("METASKAT/", gene, "/", gene, ".results.metaskato")
-set.seed(2025)
 
 
 File.Mat.vec <- character(length(cohort_list))
 File.SetInfo.vec <- character(length(cohort_list))
+set.seed(2025)
 
 for (i in seq_along(cohort_list)) {
     cohort <- cohort_list[i]
