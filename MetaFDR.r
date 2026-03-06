@@ -1,6 +1,4 @@
 #!/usr/bin/env Rscript
-#library(packrat)
-#packrat::init("/home/sajanth/scratch/AMP_PD/SKAT")
 
 library(stats)
 library(tidyr)
