@@ -1,15 +1,5 @@
 #!/bin/bash
-#SBATCH --account=def-grouleau
-#SBATCH --time=2:0:00           # time (DD-HH:MM:SS)
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=16G                  # memory per node
-#SBATCH --job-name=metaskat_analysis
-#SBATCH --error=METASKAT/logs/job.%x-%j.err
-#SBATCH --output=METASKAT/logs/job.%x-%j.out
-# ------------------------------
-# Version 2026-01-15
 
-# ------------------------------
 # Run from scratch with all cohorts as children dir
 set -e
 module load StdEnv/2020 nixpkgs/16.09 gcc/7.3 r/3.5.2
