@@ -1,8 +1,6 @@
 #!/usr/bin/env Rscript
 wd <- getwd()
 
-library(packrat)
-packrat::init("~/runs/sajanth/SKAT")
 library(SKAT)
 library(MetaSKAT)
 require(methods)
