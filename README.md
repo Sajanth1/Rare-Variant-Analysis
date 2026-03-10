@@ -13,9 +13,8 @@ Import - download raw vcf or bfile data here <br/>
 Covar - prepare your covariate file here <br/>
 Analysis - all processing and analysis happens here! <br/>
 
-*Note: package management is done via module load (standard for shared compute clusters). Also, unless otherwise stated, all scripts are run with working directory set to "import", "covar", or "analysis" depending on which part of the workflow you are operating in. 
+*Note: package management is done via mamba and apptainer. Also, unless otherwise stated, all scripts are run with working directory set to "import", "covar", or "analysis" depending on which part of the workflow you are operating in. 
 
-*Jobs will be submitted using slurm. If you wish to run these scripts locally, simply remove "sbatch" wrapper around some of the commands.
 <br/><br/>
 
 
