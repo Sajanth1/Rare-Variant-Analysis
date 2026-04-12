@@ -55,8 +55,8 @@ fi
 # 1b. Adapt bfiles to each sub-analysis
 if [[ $sample_controls == "y" ]]; then
     name="${cohort}_allctrl"  # bfile name
-    # awk '$6 == 1' $name.fam | shuf -n $num_controls > logs/sampled_controls.txt # Randomize controls
-    # awk '$6 == 1' $name.fam | grep -v -f logs/sampled_controls.txt > logs/rm_controls.txt # Get controls to remove
+    awk '$6 == 1' $name.fam | shuf -n $num_controls > logs/sampled_controls.txt # Randomize controls
+    awk '$6 == 1' $name.fam | grep -v -f logs/sampled_controls.txt > logs/rm_controls.txt # Get controls to remove
     plink2 --memory 60000 --bfile $name --double-id --remove logs/rm_controls.txt --mac 1 --make-bed --out $cohort # Update bfiles
 
 elif [[ $sample_controls == "n" ]]; then
