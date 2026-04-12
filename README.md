@@ -24,9 +24,9 @@ Before starting a project that uses WGS data, one must always create a bed file 
 
 For the WGS data itself, the main analysis script ("analysis/rare_variant.VEP.sh") has two file-type options to analyse pre-processed WGS data. Feel free to mix-and-match, but the provided script assumes that bfiles are provided for AMP_PD and a vcf.gz file is provided for UKBB and GP2.
 
-Option 1: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. Template index and merge scripts are provided in "import".
+Option 1: bfiles (ie. plink1.9 format or plink2 with --make-bed). 
 
-Option 2: bfiles (ie. plink1.9 format or plink2 with --make-bed). 
+Option 2: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them beforehand. Template index and merge scripts are provided in "import".
 <br/><br/>
 
 *Note: a template preprocessing script for vcf.gz files is provided (preprocess_WGS.sh). Methodology is further described in the paper associated with this repo.
