@@ -1,11 +1,11 @@
 # Rare-Variant-Analysis
 
-Run gene-based rare variant analysis on genomics data from large biobanks (here, AMP-PD and UKBB). This branch is specifically for the GP2 cohort. Relevant paper: [INSERT]
+Run gene-based rare variant analysis on genomics data from large biobanks. This branch is specifically designed for the GP2 cohort. Relevant paper: [INSERT]
 
 <em>For any questions: sajanth.kanagasingam@mail.mcgill.ca</em> (I would be more than happy to help!)
 <br/> <br/>
 
-SECTIONS:
+SECTIONS: <br/>
 Covar - prepare your covariate files here <br/>
 Import - process raw vcf data here <br/>
 Analysis - all filtration and analysis happens here! <br/>
@@ -22,7 +22,7 @@ If generating covar under same conditions as we did, simply run merge_covar_GP2.
 
 
 ## 2. Import
-Before starting a project that uses WGS data, one must always create a bed file that contains the genomic coordinates of the genes to be studied. A template ("import/Sajanth44.GRCh38.bed") is provided to aid you in the process of creating one. Your bed file must be formatted in the same way (CHR START END ENST GENE_NAME)
+Before starting a project that uses WGS data, one must always create a bed file that contains the genomic coordinates of the genes to be studied. A template ("import/Sajanth44.GRCh38.bed") is provided in the main branch to aid you in the process of creating one. Your bed file must be formatted in the same way (CHR START END ENST GENE_NAME)
 <br/><br/>
 
 For the WGS data itself, the main analysis script ("analysis/rare_variant.VEP.sh") has two file-type options to analyse pre-processed WGS data. Feel free to mix-and-match, but the provided script assumes that bfiles are provided for AMP_PD and a vcf.gz file is provided for UKBB and GP2.
@@ -40,7 +40,7 @@ Option 2: vcf.gz. If you have multiple vcf.gz, please index, sort and merge them
 
 ## 3. Analysis
 
-As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths! Make sure to have VEP installed beforehand (suggestion: run all downloads beforehand then comment out download commands)!
+As simple as running rare_variant.VEP.sh after modifying "USER INPUT" section with your paths! Make sure to have VEP installed beforehand (suggestion: run all downloads beforehand then comment out download commands)! If you wish to run pathway (multiple genes) or domain (part of a gene) analyses, simply create the appropriate files in the correct format (as specified in rare_variant.VEP.sh).
 
-Now, this pipeline has quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
+*Now, this pipeline has quite a bit of flexibility in that you can directly modify the variant sets and their definitions (vep_setid_prep.py line 146+), the covariates to be included in SKAT-O (SKATO.r line 48), p-value correction method (FDR.r line 25), etc.
 <br/><br/>
