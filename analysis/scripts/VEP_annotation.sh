@@ -1,5 +1,4 @@
 #!/bin/bash
-# Note: Currently apptainer fetches version 115 (GENCODE V49)
 
 #Run from analysis
 cohort=$1
