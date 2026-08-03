@@ -6,9 +6,9 @@ Run gene-based rare variant analysis on genomics data from large biobanks (here,
 <br/> <br/>
 
 SECTIONS:
-Import - download raw vcf or bfile data here <br/>
-Covar - prepare your covariate file here <br/>
-Analysis - all processing and analysis happens here! <br/>
+Covar - prepare your covariate files here <br/>
+Import - process raw vcf data here <br/>
+Analysis - all filtration and analysis happens here! <br/>
 
 *Note: package management is done via mamba and apptainer. Also, unless otherwise stated, all scripts are run with working directory set to "import", "covar", or "analysis" depending on which part of the workflow you are operating in. 
 
@@ -18,8 +18,7 @@ Analysis - all processing and analysis happens here! <br/>
 
 Covariates file MUST be named in the following format: "covar_COHORT.txt" where COHORT is the name of your dataset (eg. covar_UKBB.txt). 
 
-It is assumed that your covar has at least the following columns: "FID IID SEX AGE PC1 PC2 PC3 PC4 PC5 STATUS", where STATUS is coded as 1=control, 2=case. If not, update SKATO.r script accordingly (in the analysis section). An example covar (for UKBB) is also provided. 
-<br/><br/>
+If generating covar under same conditions as we did, simply run merge_covar_GP2.sh to create covar files for all ancestries.
 
 
 ## 2. Import
