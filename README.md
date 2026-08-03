@@ -5,10 +5,7 @@ Run gene-based rare variant analysis on genomics data from large biobanks (here,
 <em>For any questions: sajanth.kanagasingam@mail.mcgill.ca</em> (I would be more than happy to help!)
 <br/> <br/>
 
-
-Please organize your directory tree in the following manner (so that the relative paths work):
-![schema1](https://github.com/Sajanth1/Rare-Variant-Analysis/blob/main/Media/Structure.png)
-
+SECTIONS:
 Import - download raw vcf or bfile data here <br/>
 Covar - prepare your covariate file here <br/>
 Analysis - all processing and analysis happens here! <br/>
