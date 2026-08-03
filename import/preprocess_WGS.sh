@@ -1,90 +1,91 @@
 #!/bin/bash
-file=$1
-keep_samples=$2
-bed_file=$3
+#---------
+# Version (30/04/2026): ancestry mgmt
+#
+#--------
 
-module load StdEnv/2020 gcc/9.3.0 bcftools/1.16
+cohort=GP2
+bed_file=/config/KYN16.GRCh38.bed
 
-name=$(basename $file .vcf.gz)
+#GP2's R11 existing QC for vcf: • Left-aligned and normalized indels • Multiallelic split • Filtered by 'PASS' flag
 
-# workflow
-## 1. subset vcf file by samples
-## 2. label variants with DP<25/GQ<25 with missing genotype
-## 3. split multiallelic variants - otherwise plink can't handle the multiallelic variants. you can remove them if you want
-## 4. convert to plink file (also removes INFO field)
-## 5. do missingness filtering
-## 6. rename ID column of the .bim file to chr:bp:A2:A1
-## 7. convert back to vcf file
+# workflow:
+## 1. subset vcf file by samples & bed file range
+## 2. label variants with DP<15 or GQ<25 or imbalanced heterozygous with missing genotype
+## 3. convert to plink file and do missingness and mac 1 filtering
+## 4. rename ID column of the .bim file to 1:bp:A2:A1. (it was chr1:bp:SG/IG)
+## 5. convert back to vcf file
 
-# you can delete this step if your file is subset
-echo "subsetting samples"
-bcftools view --threads 10 --samples-file ${keep_samples} -Oz -o ${name}.subset.vcf.gz -R ${bed_file} $file --force-samples 
-tabix ${name}.subset.vcf.gz
-
-# DP < 25/ GQ < 25 genotypes will be marked as missing in order
-echo "label bad variants missing ./."
-bcftools +setGT ${name}.subset.vcf.gz -Ou --threads 10 \
-  -- -t q -n "." -i 'FMT/DP<25' \
-| \
-bcftools +setGT - -Ou --threads 10 \
-  -- -t q -n "." -i 'FMT/GQ<25' \
-|  \
-bcftools view -Oz -o $name.subset.DP25.GQ25.vcf.gz
-## if you wanna see the changes
-# bcftools query -f '%CHROM\t%POS[\t%GT:%DP:%GQ]\n' $name.subset.DP25.GQ25.vcf.gz| head|cut -f1-10 -d":"
-
-# split multiallelic variants
-echo "splitting multiallelic variants"
-bcftools norm --threads 5 -m -both -Oz -o $name.subset.DP25.GQ25.split.vcf.gz $name.subset.DP25.GQ25.vcf.gz
-
-# convert to plink file and do 5% missingness filtering
-## plink2 can handle multiallelic variants? 
-echo "converting vcf to plink files"
-if [[ "$name" == *"cX"* ]]; then
-  # plink2 can't well handle chrX data without --split-par
-  echo "chr X detected"
-  plink2 --vcf $name.subset.DP25.GQ25.split.vcf.gz --vcf-half-call m --split-par b38 --update-sex sex_for_plink.txt --make-bed --out $name.subset.DP25.GQ25.split
-  awk '$5 == 1' $name.subset.DP25.GQ25.split.fam > males.txt
-  awk '$5 == 2' $name.subset.DP25.GQ25.split.fam > females.txt
-  # For females (diploid X)
-  plink2 --bfile $name.subset.DP25.GQ25.split --keep females.txt --missing --out chrX_females
-
-  # For males (hemizygous X)
-  plink2 --bfile $name.subset.DP25.GQ25.split --keep males.txt --missing --out chrX_males
-  awk '$5 < 0.05 { print $2 }' chrX_females.vmiss > chrX_pass_f.txt
-  awk '$5 < 0.05 { print $2 }' chrX_males.vmiss > chrX_pass_m.txt
-  # Keep only SNPs present in both lists
-  sort chrX_pass_f.txt chrX_pass_m.txt | uniq -d > chrX_pass_snps.txt
-
-  plink2 --bfile $name.subset.DP25.GQ25.split \
-  --extract chrX_pass_snps.txt \
-  --make-bed \
-  --out $name.subset.DP25.GQ25.MISS95.split
-else
-  plink2 --vcf $name.subset.DP25.GQ25.split.vcf.gz --vcf-half-call m --make-bed --out $name.subset.DP25.GQ25.split
-  plink2 --bfile $name.subset.DP25.GQ25.split --geno 0.05 --make-bed --out $name.subset.DP25.GQ25.MISS95.split
-
-fi
-
-# reformat the ID column from chr:bp:SG/IG to chr:bp:ref:alt (A2:A1)
-awk 'BEGIN{OFS="\t"} {$2= $1 ":" $4 ":" $6 ":" $5; print}' $name.subset.DP25.GQ25.MISS95.split.bim > $name.subset.DP25.GQ25.MISS95.split.renamed.bim
-mv $name.subset.DP25.GQ25.MISS95.split.renamed.bim $name.subset.DP25.GQ25.MISS95.split.bim
-
-# convert back to vcf file
-plink2 --bfile $name.subset.DP25.GQ25.MISS95.split --export vcf bgz id-paste=iid --out $name.subset.DP25.GQ25.MISS95.split
-
-tabix $name.subset.DP25.GQ25.MISS95.split.vcf.gz
+#wb resource mount
+# -> env: mamba create -n import -c bioconda -c conda-forge bcftools=1.16 plink2=2.00a5.10
+eval "$(mamba shell hook --shell bash)" ; mamba activate import
 
 
-rm $name.subset.DP25.GQ25.MISS95.split.bim
-rm $name.subset.DP25.GQ25.MISS95.split.bed
-rm $name.subset.DP25.GQ25.MISS95.split.fam
-rm $name.subset.DP25.GQ25.MISS95.split.log
-rm $name.subset.DP25.GQ25.split.bim
-rm $name.subset.DP25.GQ25.split.bed
-rm $name.subset.DP25.GQ25.split.fam
-rm $name.subset.DP25.GQ25.split.log
-rm $name.subset.DP25.GQ25.split.vcf.gz
-rm $name.subset.DP25.GQ25.vcf.gz
-rm ${name}.subset.vcf.gz
-rm ${name}.subset.vcf.gz.tbi
+for ancestry in "AFR" "AJ" "AMR" "CAS" "EAS" "EUR" "MDE" "SAS" "CAH"; do
+
+  printf "\n\n\n\nProcessing ${ancestry}...\n\n"
+  name="${ancestry}/${ancestry}_${cohort}"
+  keep_samples="../covar/${ancestry}_sampleIDs_GP2.txt"
+  mkdir -p ${ancestry}/vcfs
+
+
+  # 1a. Subset
+  if [[ -f "${ancestry}/vcfs_rerun.txt" ]]; then
+    input_list="${ancestry}/vcfs_rerun.txt"
+  else
+    ls /config/workspace/gp2_tier2_eu_release11/wgs/deepvariant_joint_calling/vcfs/${ancestry}/*.vcf.gz | grep -vE "chrX|chrY" | sort -V > "${ancestry}/vcfs_list.txt"
+    input_list="${ancestry}/vcfs_list.txt"
+  fi
+
+  while read -r file; do
+    echo "subsetting $(basename "$file")"
+    out=${ancestry}/vcfs/$(basename "$file")
+    
+    bcftools view --threads 4 --samples-file ${keep_samples} -Oz -o ${out} -R ${bed_file} $file --force-samples ; tabix ${out}
+  done < $input_list
+
+
+  # 1b. Merge
+  echo "merging vcfs"
+  ls ${ancestry}/vcfs/*.vcf.gz | sort -V > ${ancestry}/merge_list.txt
+  bcftools concat --naive -f ${ancestry}/merge_list.txt --threads 10 -Oz -o ${name}_merged.vcf.gz && echo 'concatenation done' ; tabix ${name}_merged.vcf.gz
+
+
+
+  # 2. DP < 15 or GQ < 25 or imbalanced heterozygous genotypes will be marked as missing in order; used VAF column (pre-created by GP2) is defined as "The fraction of reads with alternate allele (nALT/nSumAll)">
+  echo "label bad variants missing ./."
+  bcftools +setGT ${name}_merged.vcf.gz -Ou --threads 10 \
+    -- -t q -n "." -i 'FMT/DP<15' \
+  | \
+  bcftools +setGT - -Ou --threads 10 \
+    -- -t q -n "." -i 'FMT/GQ<25' \
+  | \
+  bcftools +setGT - -Ou --threads 10 \
+    -- -t q -n "." -i 'GT="het" & FMT/VAF < 0.15' \
+  | \
+  bcftools +setGT - -Ou --threads 10 \
+    -- -t q -n "." -i 'GT="het" & FMT/VAF > 0.85' \
+  | \
+  bcftools view -Oz -o ${name}_DP25_GQ25_AB.vcf.gz
+  ## if you wanna see the changes
+  # bcftools query -f '%CHROM\t%POS[\t%GT:%DP:%GQ:%AD:%VAF]\n' $name.subset.DP25.GQ25.vcf.gz| head|cut -f1-17 -d":"
+
+
+  # 3. convert to bfiles and do 5% missingness and mac 1 filtering
+  echo "converting vcf to plink files"
+  plink2 --vcf ${name}_DP25_GQ25_AB.vcf.gz --vcf-half-call m --geno 0.05 --mac 1 --make-bed --out ${name}_DP25_GQ25_AB_MISS95
+
+
+  # 4. reformat the ID column from chr1:bp:SG/IG to 1:bp:ref:alt (A2:A1) as well as the chr column
+  awk 'BEGIN{OFS="\t"} {sub(/^chr/, "", $1); $2= $1 ":" $4 ":" $6 ":" $5; print}' ${name}_DP25_GQ25_AB_MISS95.bim > ${name}_DP25_GQ25_AB_MISS95.renamed.bim ; mv ${name}_DP25_GQ25_AB_MISS95.renamed.bim ${name}_DP25_GQ25_AB_MISS95.bim
+
+  # 5. convert back to vcf file
+  plink2 --bfile ${name}_DP25_GQ25_AB_MISS95 --export vcf bgz id-paste=iid --out ${name} ; tabix ${name}.vcf.gz
+
+
+  rm -r ${ancestry}/vcfs
+  rm ${name}_merged.vcf.gz*
+  rm ${name}_DP25_GQ25_AB.vcf.gz
+  rm ${name}_DP25_GQ25_AB_MISS95*
+
+done
