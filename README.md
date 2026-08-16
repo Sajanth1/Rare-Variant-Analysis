@@ -22,7 +22,7 @@ If generating covar under same conditions as we did, simply run merge_covar_GP2.
 
 
 ## 2. Import
-Before starting a project that uses WGS data, one must always create a bed file that contains the genomic coordinates of the genes to be studied. A template ("import/Sajanth44.GRCh38.bed") is provided in the main branch to aid you in the process of creating one. Your bed file must be formatted in the same way (CHR START END ENST GENE_NAME)
+Before starting a project that uses WGS data, one must always create a bed file that contains the genomic coordinates of the genes to be studied. A template ("import/Sajanth44.GRCh38.bed") is provided to aid you in the process of creating one. Your bed file must be formatted in the same way (CHR START END ENST GENE_NAME)
 <br/><br/>
 
 For the WGS data itself, the main analysis script ("analysis/rare_variant.VEP.sh") has two file-type options to analyse pre-processed WGS data. Feel free to mix-and-match, but the provided script assumes that bfiles are provided for AMP_PD and a vcf.gz file is provided for UKBB and GP2.
